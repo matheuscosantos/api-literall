@@ -1,19 +1,22 @@
 package com.fatec.backend.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class Usuario {
+public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String email;
-    private String telefone;
+    private String categoria;
+    private LocalDate data;
     private LocalDateTime dataDeCriacao;
-    private LocalDateTime dataDeAtualizacao;
+    private LocalDateTime dataDeAtualização;
 
     @ManyToOne
     private Endereco endereco;
+    @ManyToOne
+    private Usuario usuario;
 }
