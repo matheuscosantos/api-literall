@@ -5,10 +5,12 @@ import com.fatec.backend.repository.EventoRepository;
 import com.fatec.backend.service.EventoService;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Service
 public class EventoServiceImplementation implements EventoService {
 
     @Autowired

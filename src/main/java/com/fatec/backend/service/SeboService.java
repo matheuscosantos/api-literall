@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
 public interface SeboService {
     public Sebo save(Sebo sebo);
     public Sebo update(Long id, Sebo sebo);

@@ -5,10 +5,12 @@ import com.fatec.backend.repository.UsuarioRepository;
 import com.fatec.backend.service.UsuarioService;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.util.Optional;
 
+@Service
 public class UsuarioServiceImplementation implements UsuarioService {
 
     @Autowired

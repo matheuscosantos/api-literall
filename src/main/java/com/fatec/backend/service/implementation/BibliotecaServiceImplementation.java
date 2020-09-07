@@ -5,10 +5,12 @@ import com.fatec.backend.repository.BibliotecaRepository;
 import com.fatec.backend.service.BibliotecaService;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Service
 public class BibliotecaServiceImplementation implements BibliotecaService {
 
     @Autowired

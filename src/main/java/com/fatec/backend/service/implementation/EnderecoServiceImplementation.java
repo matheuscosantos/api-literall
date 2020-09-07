@@ -5,9 +5,11 @@ import com.fatec.backend.repository.EnderecoRepository;
 import com.fatec.backend.service.EnderecoService;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class EnderecoServiceImplementation implements EnderecoService {
 
     @Autowired

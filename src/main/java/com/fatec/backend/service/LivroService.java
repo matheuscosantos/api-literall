@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
 public interface LivroService {
     public Livro save(Livro livro);
     public Livro update(Long id, Livro Livro);
