@@ -1,4 +1,4 @@
-package com.fatec.backend.enums;
+package com.fatec.backend.models.enums;
 
 public enum Avaliacao {
     UM,
