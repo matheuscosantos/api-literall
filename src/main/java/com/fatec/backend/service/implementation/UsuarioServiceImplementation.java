@@ -1,5 +1,6 @@
 package com.fatec.backend.service.implementation;
 
+import com.fatec.backend.form.UsuarioForm;
 import com.fatec.backend.model.Usuario;
 import com.fatec.backend.repository.UsuarioRepository;
 import com.fatec.backend.service.UsuarioService;
@@ -17,18 +18,23 @@ public class UsuarioServiceImplementation implements UsuarioService {
     public UsuarioRepository usuarioRepository;
 
     @Override
-    public Usuario save(Usuario usuario) {
+    public Usuario save(UsuarioForm usuarioForm) {
+        Usuario usuario = new Usuario();
+        usuario.setNome(usuarioForm.getNome());
+        usuario.setEmail(usuarioForm.getEmail());
+        usuario.setTelefone(usuarioForm.getTelefone());
+        usuario.setSenha(usuarioForm.getSenha());
         return usuarioRepository.save(usuario);
     }
 
     @Override
-    public Usuario update(Long id, Usuario usuario) {
-        Optional<Usuario> usuarioExistente = usuarioRepository.findById(Math.toIntExact(usuario.getId()));
+    public Usuario update(Long id, UsuarioForm usuarioForm) {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(Math.toIntExact(id));
         if(usuarioExistente.isPresent()){
-            usuarioExistente.get().setNome(usuario.getNome());
-            usuarioExistente.get().setEmail(usuario.getEmail());
-            usuarioExistente.get().setTelefone(usuario.getTelefone());
-            usuarioExistente.get().setSenha(usuario.getSenha());
+            usuarioExistente.get().setNome(usuarioForm.getNome());
+            usuarioExistente.get().setEmail(usuarioForm.getEmail());
+            usuarioExistente.get().setTelefone(usuarioForm.getTelefone());
+            usuarioExistente.get().setSenha(usuarioForm.getSenha());
             return usuarioRepository.save(usuarioExistente.get());
         }
         return null;

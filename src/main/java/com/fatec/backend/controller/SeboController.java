@@ -1,5 +1,6 @@
 package com.fatec.backend.controller;
 
+import com.fatec.backend.form.SeboForm;
 import com.fatec.backend.model.Sebo;
 import com.fatec.backend.service.SeboService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class SeboController {
     SeboService seboService;
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Sebo> saveSebo(@RequestBody Sebo sebo){
+    public ResponseEntity<Sebo> saveSebo(@RequestBody SeboForm sebo){
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(seboService.save(sebo));
         }catch (Exception e){
@@ -40,11 +41,10 @@ public class SeboController {
     }
 
     @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Sebo> updateSebo(@RequestBody Sebo seboUpdated, @PathVariable(value="id") Long id){
+    public ResponseEntity<Sebo> updateSebo(@RequestBody SeboForm seboUpdated, @PathVariable(value="id") Long id){
         try{
             Optional<Sebo> sebo = seboService.findById(id);
             if(sebo.isPresent()){
-                seboUpdated.setId(sebo.get().getId());
                 return new ResponseEntity<Sebo>(seboService.save(seboUpdated), HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
