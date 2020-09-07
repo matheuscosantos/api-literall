@@ -21,8 +21,11 @@ public class Biblioteca {
     private LocalDateTime dataDeCriacao;
     private LocalDateTime dataDeAtualizacao;
 
-    @ManyToOne
-    private Endereco endereco;
+    private String logradouro;
+    private String numero;
+    private String cidade;
+    private String estado;
+    private String cep;
 
     @ManyToOne
     private Usuario usuario;
