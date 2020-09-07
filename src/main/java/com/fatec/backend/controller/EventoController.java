@@ -1,5 +1,6 @@
 package com.fatec.backend.controller;
 
+import com.fatec.backend.form.EventoForm;
 import com.fatec.backend.model.Evento;
 import com.fatec.backend.service.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class EventoController {
     EventoService eventoService;
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Evento> saveEvento(@RequestBody Evento evento){
+    public ResponseEntity<Evento> saveEvento(@RequestBody EventoForm evento){
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.save(evento));
         }catch (Exception e){
@@ -40,11 +41,10 @@ public class EventoController {
     }
 
     @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Evento> updateEvento(@RequestBody Evento eventoUpdated, @PathVariable(value="id") Long id){
+    public ResponseEntity<Evento> updateEvento(@RequestBody EventoForm eventoUpdated, @PathVariable(value="id") Long id){
         try{
             Optional<Evento> evento = eventoService.findById(id);
             if(evento.isPresent()){
-                eventoUpdated.setId(evento.get().getId());
                 return new ResponseEntity<Evento>(eventoService.save(eventoUpdated), HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

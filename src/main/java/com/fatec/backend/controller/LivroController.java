@@ -1,5 +1,6 @@
 package com.fatec.backend.controller;
 
+import com.fatec.backend.form.LivroForm;
 import com.fatec.backend.model.Livro;
 import com.fatec.backend.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class LivroController {
     LivroService livroService;
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Livro> saveLivro(@RequestBody Livro livro){
+    public ResponseEntity<Livro> saveLivro(@RequestBody LivroForm livro){
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(livroService.save(livro));
         }catch (Exception e){
@@ -40,11 +41,10 @@ public class LivroController {
     }
 
     @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Livro> updateLivro(@RequestBody Livro livroUpdated, @PathVariable(value="id") Long id){
+    public ResponseEntity<Livro> updateLivro(@RequestBody LivroForm livroUpdated, @PathVariable(value="id") Long id){
         try{
             Optional<Livro> livro = livroService.findById(id);
             if(livro.isPresent()){
-                livroUpdated.setId(livro.get().getId());
                 return new ResponseEntity<Livro>(livroService.save(livroUpdated), HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

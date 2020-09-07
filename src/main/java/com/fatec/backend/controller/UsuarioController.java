@@ -1,5 +1,6 @@
 package com.fatec.backend.controller;
 
+import com.fatec.backend.form.UsuarioForm;
 import com.fatec.backend.model.Usuario;
 import com.fatec.backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Usuario> saveUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<Usuario> saveUsuario(@RequestBody UsuarioForm usuarioForm){
         try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
+            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuarioForm));
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -40,11 +41,10 @@ public class UsuarioController {
     }
 
     @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuarioUpdated, @PathVariable(value="id") Long id){
+    public ResponseEntity<Usuario> updateUsuario(@RequestBody UsuarioForm usuarioUpdated, @PathVariable(value="id") Long id){
         try{
             Optional<Usuario> usuario = usuarioService.findById(id);
             if(usuario.isPresent()){
-                usuarioUpdated.setId(usuario.get().getId());
                 return new ResponseEntity<Usuario>(usuarioService.save(usuarioUpdated), HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
