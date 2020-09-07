@@ -78,4 +78,7 @@ public class Usuario {
         this.dataDeAtualizacao = dataDeAtualizacao;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

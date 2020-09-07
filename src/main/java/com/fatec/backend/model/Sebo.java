@@ -51,6 +51,10 @@ public class Sebo {
         this.nome = nome;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setData(LocalDate data) {
         this.data = data;
     }

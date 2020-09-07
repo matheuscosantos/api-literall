@@ -5,10 +5,12 @@ import com.fatec.backend.repository.LivroRepository;
 import com.fatec.backend.service.LivroService;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Service
 public class LivroServiceImplementation implements LivroService {
 
     @Autowired

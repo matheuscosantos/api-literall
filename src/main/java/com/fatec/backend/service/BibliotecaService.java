@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
 public interface BibliotecaService {
     public Biblioteca save(Biblioteca biblioteca);
     public Biblioteca update(Long id, Biblioteca biblioteca);
