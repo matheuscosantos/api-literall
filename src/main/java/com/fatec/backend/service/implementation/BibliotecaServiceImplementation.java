@@ -26,7 +26,11 @@ public class BibliotecaServiceImplementation implements BibliotecaService {
         Optional<Biblioteca> bibliotecaExistente = bibliotecaRepository.findById(Math.toIntExact(biblioteca.getId()));
         if(bibliotecaExistente.isPresent()){
             bibliotecaExistente.get().setNome(biblioteca.getNome());
-            bibliotecaExistente.get().setEndereco(biblioteca.getEndereco());
+            bibliotecaExistente.get().setLogradouro(biblioteca.getLogradouro());
+            bibliotecaExistente.get().setNumero(biblioteca.getNumero());
+            bibliotecaExistente.get().setCidade(biblioteca.getCidade());
+            bibliotecaExistente.get().setEstado(biblioteca.getEstado());
+            bibliotecaExistente.get().setCep(biblioteca.getCep());
             bibliotecaExistente.get().setUsuario(biblioteca.getUsuario());
             bibliotecaExistente.get().setDataDeAtualizacao(LocalDateTime.now());
             return  bibliotecaRepository.save(bibliotecaExistente.get());

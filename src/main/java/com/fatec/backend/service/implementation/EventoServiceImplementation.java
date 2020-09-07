@@ -27,7 +27,11 @@ public class EventoServiceImplementation implements EventoService {
         if(eventoExistente.isPresent()){
             eventoExistente.get().setNome(evento.getNome());
             eventoExistente.get().setCategoria(evento.getCategoria());
-            eventoExistente.get().setEndereco(evento.getEndereco());
+            eventoExistente.get().setLogradouro(evento.getLogradouro());
+            eventoExistente.get().setNumero(evento.getNumero());
+            eventoExistente.get().setCidade(evento.getCidade());
+            eventoExistente.get().setEstado(evento.getEstado());
+            eventoExistente.get().setCep(evento.getCep());
             eventoExistente.get().setData(evento.getData());
             eventoExistente.get().setUsuario(evento.getUsuario());
             eventoExistente.get().setDataDeAtualizacao(LocalDateTime.now());

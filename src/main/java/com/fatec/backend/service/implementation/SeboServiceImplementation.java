@@ -25,7 +25,11 @@ public class SeboServiceImplementation implements SeboService {
         Optional<Sebo> seboExistente = seboRepository.findById(Math.toIntExact(sebo.getId()));
         if(seboExistente.isPresent()){
             seboExistente.get().setNome(sebo.getNome());
-            seboExistente.get().setEndereco(sebo.getEndereco());
+            seboExistente.get().setLogradouro(sebo.getLogradouro());
+            seboExistente.get().setNumero(sebo.getNumero());
+            seboExistente.get().setCidade(sebo.getCidade());
+            seboExistente.get().setEstado(sebo.getEstado());
+            seboExistente.get().setCep(sebo.getCep());
             seboExistente.get().setUsuario(sebo.getUsuario());
             return seboRepository.save(sebo);
         }
