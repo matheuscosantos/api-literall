@@ -1,10 +1,17 @@
 package com.fatec.backend.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,70 +24,7 @@ public class Evento {
 
     @ManyToOne
     private Endereco endereco;
+
     @ManyToOne
     private Usuario usuario;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
-    public LocalDateTime getDataDeCriacao() {
-        return dataDeCriacao;
-    }
-
-    public void setDataDeCriacao(LocalDateTime dataDeCriacao) {
-        this.dataDeCriacao = dataDeCriacao;
-    }
-
-    public LocalDateTime getDataDeAtualizacao() {
-        return dataDeAtualizacao;
-    }
-
-    public void setDataDeAtualizacao(LocalDateTime dataDeAtualizacao) {
-        this.dataDeAtualizacao = dataDeAtualizacao;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 }
