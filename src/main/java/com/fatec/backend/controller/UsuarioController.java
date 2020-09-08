@@ -1,9 +1,15 @@
 package com.fatec.backend.controller;
 
 import com.fatec.backend.form.UsuarioForm;
+import com.fatec.backend.model.Sebo;
 import com.fatec.backend.model.Usuario;
+import com.fatec.backend.repository.UsuarioRepository;
 import com.fatec.backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +23,9 @@ public class UsuarioController {
 
     @Autowired
     UsuarioService usuarioService;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @PostMapping(produces = "application/json")
     public ResponseEntity<Usuario> saveUsuario(@RequestBody UsuarioForm usuarioForm){
@@ -61,5 +70,11 @@ public class UsuarioController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping
+    public Page<Usuario> listAllEventos(@PageableDefault(sort="id", direction = Sort.Direction.ASC) Pageable pageable){
+        Page<Usuario> usuarios = usuarioRepository.findAll(pageable);
+        return usuarios;
     }
 }

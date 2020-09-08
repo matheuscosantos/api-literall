@@ -1,9 +1,15 @@
 package com.fatec.backend.controller;
 
 import com.fatec.backend.form.SeboForm;
+import com.fatec.backend.model.Livro;
 import com.fatec.backend.model.Sebo;
+import com.fatec.backend.repository.SeboRepository;
 import com.fatec.backend.service.SeboService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +23,9 @@ public class SeboController {
 
     @Autowired
     SeboService seboService;
+
+    @Autowired
+    SeboRepository seboRepository;
 
     @PostMapping(produces = "application/json")
     public ResponseEntity<Sebo> saveSebo(@RequestBody SeboForm sebo){
@@ -61,5 +70,11 @@ public class SeboController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping
+    public Page<Sebo> listAllEventos(@PageableDefault(sort="id", direction = Sort.Direction.ASC) Pageable pageable){
+        Page<Sebo> sebos = seboRepository.findAll(pageable);
+        return sebos;
     }
 }
