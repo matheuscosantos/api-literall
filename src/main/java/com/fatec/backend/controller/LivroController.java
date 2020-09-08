@@ -1,9 +1,15 @@
 package com.fatec.backend.controller;
 
 import com.fatec.backend.form.LivroForm;
+import com.fatec.backend.model.Evento;
 import com.fatec.backend.model.Livro;
+import com.fatec.backend.repository.LivroRepository;
 import com.fatec.backend.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +23,9 @@ public class LivroController {
 
     @Autowired
     LivroService livroService;
+
+    @Autowired
+    LivroRepository livroRepository;
 
     @PostMapping(produces = "application/json")
     public ResponseEntity<Livro> saveLivro(@RequestBody LivroForm livro){
@@ -61,5 +70,11 @@ public class LivroController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping
+    public Page<Livro> listAllEventos(@PageableDefault(sort="id", direction = Sort.Direction.ASC) Pageable pageable){
+        Page<Livro> livros = livroRepository.findAll(pageable);
+        return livros;
     }
 }

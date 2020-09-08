@@ -2,8 +2,13 @@ package com.fatec.backend.controller;
 
 import com.fatec.backend.form.EventoForm;
 import com.fatec.backend.model.Evento;
+import com.fatec.backend.repository.EventoRepository;
 import com.fatec.backend.service.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +22,9 @@ public class EventoController {
 
     @Autowired
     EventoService eventoService;
+
+    @Autowired
+    EventoRepository eventoRepository;
 
     @PostMapping(produces = "application/json")
     public ResponseEntity<Evento> saveEvento(@RequestBody EventoForm evento){
@@ -61,5 +69,11 @@ public class EventoController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping
+    public Page<Evento> listAllEventos(@PageableDefault(sort="id", direction = Sort.Direction.ASC) Pageable pageable){
+        Page<Evento> eventos = eventoRepository.findAll(pageable);
+        return eventos;
     }
 }
