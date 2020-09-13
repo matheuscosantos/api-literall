@@ -28,4 +28,23 @@ public class Sebo {
 
     @ManyToOne
     private Usuario usuario;
+
+    public Sebo(String nome,
+                LocalDate data,
+                String logradouro,
+                String numero,
+                String cidade,
+                String estado,
+                String cep,
+                Usuario usuario) {
+        this.nome = nome;
+        this.data = data;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+        this.usuario = usuario;
+        this.setDataDeAtualizacao(LocalDateTime.now());
+    }
 }

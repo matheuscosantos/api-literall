@@ -2,6 +2,7 @@ package com.fatec.backend.service;
 
 import com.fatec.backend.form.UsuarioForm;
 import com.fatec.backend.model.Usuario;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

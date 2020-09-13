@@ -13,5 +13,5 @@ public class SeboForm {
     private String cidade;
     private String estado;
     private String cep;
-    private Integer usuario;
+    private Long usuario;
 }

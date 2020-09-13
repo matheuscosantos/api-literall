@@ -17,5 +17,5 @@ public class LivroForm {
     private String autor;
     private Status status;
     private Avaliacao avaliacao;
-    private Integer usuario;
+    private Long usuario;
 }

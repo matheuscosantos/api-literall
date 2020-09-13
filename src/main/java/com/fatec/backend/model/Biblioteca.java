@@ -17,10 +17,8 @@ public class Biblioteca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private LocalDate data;
     private LocalDateTime dataDeCriacao;
     private LocalDateTime dataDeAtualizacao;
-
     private String logradouro;
     private String numero;
     private String cidade;
@@ -30,4 +28,20 @@ public class Biblioteca {
     @ManyToOne
     private Usuario usuario;
 
+    public Biblioteca(String nome,
+                      String logradouro,
+                      String numero,
+                      String cidade,
+                      String estado,
+                      String cep,
+                      Usuario usuario) {
+        this.nome = nome;
+        this.dataDeCriacao = LocalDateTime.now();
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+        this.usuario = usuario;
+    }
 }

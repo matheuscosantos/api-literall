@@ -2,8 +2,6 @@ package com.fatec.backend.form;
 
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 @Getter
 public class UsuarioForm {
     private String nome;

@@ -32,4 +32,29 @@ public class Livro {
 
     @ManyToOne
     private Usuario usuario;
+
+    public Livro(String titulo,
+                 String editora,
+                 String isbn,
+                 String idioma,
+                 String descricao,
+                 String categoria,
+                 String edicao,
+                 String autor,
+                 Status status,
+                 Avaliacao avaliacao,
+                 Usuario usuario) {
+        this.titulo = titulo;
+        this.editora = editora;
+        this.isbn = isbn;
+        this.idioma = idioma;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.edicao = edicao;
+        this.autor = autor;
+        this.status = status;
+        this.avaliacao = avaliacao;
+        this.usuario = usuario;
+        this.setDataDeCriacao(LocalDateTime.now());
+    }
 }

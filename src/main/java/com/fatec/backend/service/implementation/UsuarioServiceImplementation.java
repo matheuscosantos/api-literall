@@ -6,9 +6,14 @@ import com.fatec.backend.repository.UsuarioRepository;
 import com.fatec.backend.service.UsuarioService;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -29,26 +34,29 @@ public class UsuarioServiceImplementation implements UsuarioService {
 
     @Override
     public Usuario update(Long id, UsuarioForm usuarioForm) {
-        Optional<Usuario> usuarioExistente = usuarioRepository.findById(Math.toIntExact(id));
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
         if(usuarioExistente.isPresent()){
             usuarioExistente.get().setNome(usuarioForm.getNome());
             usuarioExistente.get().setEmail(usuarioForm.getEmail());
             usuarioExistente.get().setTelefone(usuarioForm.getTelefone());
             usuarioExistente.get().setSenha(usuarioForm.getSenha());
-            return usuarioRepository.save(usuarioExistente.get());
+            usuarioExistente.get().setDataDeAtualizacao(LocalDateTime.now());
+            usuarioRepository.save(usuarioExistente.get());
+            return usuarioExistente.get();
         }
         return null;
     }
 
     @Override
     public Optional<Usuario> findById(Long id) {
-        return usuarioRepository.findById(Math.toIntExact(id));
+        return usuarioRepository.findById(id);
     }
 
     @Override
     public void deleteById(Long id) {
-        Usuario usuario = usuarioRepository.findById(Math.toIntExact(id)).orElseThrow(()-> new ObjectNotFoundException(
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(
                 "Event not found.", Event.class.getName()));
-        usuarioRepository.deleteById(Math.toIntExact(usuario.getId()));
+        usuarioRepository.deleteById(usuario.getId());
     }
+
 }
