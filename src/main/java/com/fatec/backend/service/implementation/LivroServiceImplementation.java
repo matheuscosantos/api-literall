@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,21 +25,21 @@ public class LivroServiceImplementation implements LivroService {
 
     @Override
     public Livro save(LivroForm livroForm) {
-        Livro livro = new Livro();
         Optional<Usuario> usuario = usuarioRepository.findById(livroForm.getUsuario());
         if(usuario.isPresent()) {
-            livro.setTitulo(livroForm.getTitulo());
-            livro.setEditora(livroForm.getEditora());
-            livro.setIsbn(livroForm.getIsbn());
-            livro.setIdioma(livroForm.getIdioma());
-            livro.setDescricao(livroForm.getDescricao());
-            livro.setCategoria(livroForm.getCategoria());
-            livro.setEdicao(livroForm.getEdicao());
-            livro.setDataDeAtualizacao(LocalDateTime.now());
-            livro.setAutor(livroForm.getAutor());
-            livro.setStatus(livroForm.getStatus());
-            livro.setAvaliacao(livroForm.getAvaliacao());
-            livro.setUsuario(usuario.get());
+            Livro livro = new Livro(
+                livroForm.getTitulo(),
+                livroForm.getEditora(),
+                livroForm.getIsbn(),
+                livroForm.getIdioma(),
+                livroForm.getDescricao(),
+                livroForm.getCategoria(),
+                livroForm.getEdicao(),
+                livroForm.getAutor(),
+                livroForm.getStatus(),
+                livroForm.getAvaliacao(),
+                usuario.get()
+            );
             return livroRepository.save(livro);
         }
         return null;
@@ -46,7 +47,7 @@ public class LivroServiceImplementation implements LivroService {
 
     @Override
     public Livro update(Long id, LivroForm livroForm) {
-        Optional<Livro> livroExistente = livroRepository.findById(Math.toIntExact(id));
+        Optional<Livro> livroExistente = livroRepository.findById(id);
         if(livroExistente.isPresent()){
             livroExistente.get().setTitulo(livroForm.getTitulo());
             livroExistente.get().setEditora(livroForm.getEditora());
@@ -66,13 +67,14 @@ public class LivroServiceImplementation implements LivroService {
 
     @Override
     public Optional<Livro> findById(Long id) {
-        return livroRepository.findById(Math.toIntExact(id));
+        return livroRepository.findById(id);
     }
 
     @Override
     public void deleteById(Long id) {
-        Livro livro = livroRepository.findById(Math.toIntExact(id)).orElseThrow(()-> new ObjectNotFoundException(
+        Livro livro = livroRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(
                 "Livro não encontrado.", Livro.class.getName()));
-        livroRepository.deleteById(Math.toIntExact(livro.getId()));
+        livroRepository.deleteById(livro.getId());
     }
+
 }

@@ -1,6 +1,7 @@
 package com.fatec.backend.controller;
 
 import com.fatec.backend.form.EventoForm;
+import com.fatec.backend.model.Biblioteca;
 import com.fatec.backend.model.Evento;
 import com.fatec.backend.repository.EventoRepository;
 import com.fatec.backend.service.EventoService;
@@ -14,10 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/api/evento")
+@CrossOrigin(origins = "*")
 public class EventoController {
 
     @Autowired
@@ -35,7 +39,7 @@ public class EventoController {
         }
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Evento> getEvento(@PathVariable(value = "id") Long id){
         try{
             Optional<Evento> evento = eventoService.findById(id);
@@ -48,12 +52,14 @@ public class EventoController {
         }
     }
 
-    @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Evento> updateEvento(@RequestBody EventoForm eventoUpdated, @PathVariable(value="id") Long id){
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Evento> updateEvento(@PathVariable Long id, @RequestBody EventoForm eventoForm){
         try{
             Optional<Evento> evento = eventoService.findById(id);
             if(evento.isPresent()){
-                return new ResponseEntity<Evento>(eventoService.save(eventoUpdated), HttpStatus.OK);
+                Evento eventoAtualizado = eventoService.update(id, eventoForm);
+                return new ResponseEntity<Evento>(eventoAtualizado, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -71,9 +77,8 @@ public class EventoController {
         }
     }
 
-    @GetMapping
-    public Page<Evento> listAllEventos(@PageableDefault(sort="id", direction = Sort.Direction.ASC) Pageable pageable){
-        Page<Evento> eventos = eventoRepository.findAll(pageable);
-        return eventos;
+    @GetMapping("/cidade/{cidade}")
+    public List<Evento> getEventoByCidade(@PathVariable(value = "cidade") String cidade){
+        return eventoService.findByCidade(cidade);
     }
 }

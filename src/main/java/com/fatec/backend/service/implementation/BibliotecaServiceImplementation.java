@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,18 +25,17 @@ public class BibliotecaServiceImplementation implements BibliotecaService {
 
     @Override
     public Biblioteca save(BibliotecaForm bibliotecaForm) {
-        Biblioteca biblioteca = new Biblioteca();
         Optional<Usuario> usuario = usuarioRepository.findById(bibliotecaForm.getUsuario());
         if(usuario.isPresent()){
-            biblioteca.setNome(bibliotecaForm.getNome());
-            biblioteca.setData(bibliotecaForm.getData());
-            biblioteca.setLogradouro(bibliotecaForm.getLogradouro());
-            biblioteca.setNumero(bibliotecaForm.getNumero());
-            biblioteca.setCidade(bibliotecaForm.getCidade());
-            biblioteca.setEstado(bibliotecaForm.getEstado());
-            biblioteca.setCep(bibliotecaForm.getCep());
-            biblioteca.setEstado(bibliotecaForm.getEstado());
-            biblioteca.setUsuario(usuario.get());
+            Biblioteca biblioteca = new Biblioteca(
+                bibliotecaForm.getNome(),
+                bibliotecaForm.getLogradouro(),
+                bibliotecaForm.getNumero(),
+                bibliotecaForm.getCidade(),
+                bibliotecaForm.getEstado(),
+                bibliotecaForm.getCep(),
+                usuario.get()
+            );
             return bibliotecaRepository.save(biblioteca);
         }
         return null;
@@ -43,7 +43,7 @@ public class BibliotecaServiceImplementation implements BibliotecaService {
 
     @Override
     public Biblioteca update(Long id, BibliotecaForm bibliotecaForm) {
-        Optional<Biblioteca> bibliotecaExistente = bibliotecaRepository.findById(Math.toIntExact(id));
+        Optional<Biblioteca> bibliotecaExistente = bibliotecaRepository.findById(id);
         if(bibliotecaExistente.isPresent()){
             bibliotecaExistente.get().setNome(bibliotecaForm.getNome());
             bibliotecaExistente.get().setLogradouro(bibliotecaForm.getLogradouro());
@@ -59,13 +59,18 @@ public class BibliotecaServiceImplementation implements BibliotecaService {
 
     @Override
     public Optional<Biblioteca> findById(Long id) {
-        return bibliotecaRepository.findById(Math.toIntExact(id));
+        return bibliotecaRepository.findById(id);
     }
 
     @Override
     public void deleteById(Long id) {
-        Biblioteca biblioteca = bibliotecaRepository.findById(Math.toIntExact(id)).orElseThrow(()-> new ObjectNotFoundException(
+        Biblioteca biblioteca = bibliotecaRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(
                 "Biblioteca not found.", Biblioteca.class.getName()));
-        bibliotecaRepository.deleteById(Math.toIntExact(biblioteca.getId()));
+        bibliotecaRepository.deleteById(biblioteca.getId());
+    }
+
+    @Override
+    public List<Biblioteca> findByCidade(String cidade) {
+        return bibliotecaRepository.findByCidade(cidade);
     }
 }

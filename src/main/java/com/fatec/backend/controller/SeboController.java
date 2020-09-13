@@ -1,6 +1,7 @@
 package com.fatec.backend.controller;
 
 import com.fatec.backend.form.SeboForm;
+import com.fatec.backend.model.Biblioteca;
 import com.fatec.backend.model.Livro;
 import com.fatec.backend.model.Sebo;
 import com.fatec.backend.repository.SeboRepository;
@@ -15,10 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/api/sebo")
+@CrossOrigin(origins = "*")
 public class SeboController {
 
     @Autowired
@@ -36,7 +39,7 @@ public class SeboController {
         }
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Sebo> getSebo(@PathVariable(value = "id") Long id){
         try{
             Optional<Sebo> sebo = seboService.findById(id);
@@ -50,11 +53,12 @@ public class SeboController {
     }
 
     @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Sebo> updateSebo(@RequestBody SeboForm seboUpdated, @PathVariable(value="id") Long id){
+    public ResponseEntity<Sebo> update(@RequestBody SeboForm seboForm, @PathVariable(value="id") Long id){
         try{
             Optional<Sebo> sebo = seboService.findById(id);
             if(sebo.isPresent()){
-                return new ResponseEntity<Sebo>(seboService.save(seboUpdated), HttpStatus.OK);
+                Sebo seboAtualizado = seboService.update(id, seboForm);
+                return new ResponseEntity<Sebo>(seboAtualizado, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -72,9 +76,8 @@ public class SeboController {
         }
     }
 
-    @GetMapping
-    public Page<Sebo> listAllEventos(@PageableDefault(sort="id", direction = Sort.Direction.ASC) Pageable pageable){
-        Page<Sebo> sebos = seboRepository.findAll(pageable);
-        return sebos;
+    @GetMapping("/cidade/{cidade}")
+    public List<Sebo> getSeboByCidade(@PathVariable(value = "cidade") String cidade){
+        return seboService.findByCidade(cidade);
     }
 }

@@ -29,4 +29,25 @@ public class Evento {
 
     @ManyToOne
     private Usuario usuario;
+
+    public Evento(String nome,
+                  String categoria,
+                  LocalDate data,
+                  String logradouro,
+                  String numero,
+                  String cidade,
+                  String estado,
+                  String cep,
+                  Usuario usuario) {
+        this.nome = nome;
+        this.categoria = categoria;
+        this.data = data;
+        this.dataDeCriacao = LocalDateTime.now();
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+        this.usuario = usuario;
+    }
 }
