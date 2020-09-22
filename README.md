@@ -21,4 +21,4 @@ A aplicação possui as seguintes camadas:
 A documentação foi criada utilizando a biblioteca Swagger, com deploy no Heroku e pode ser acessada nesse [link](https://literall.herokuapp.com/swagger-ui.html).
 
 ## Observações
-Essa API será consumida por uma aplicação mobile em Flutter que está em desenvolvimento, assim que estiver disponível terá o link compartilhado aqui.
+Essa API será consumida por uma plicação desenvolvida em Flutter que está em desenvolvimento, assim que estiver disponível terá o link compartilhado aqui.
