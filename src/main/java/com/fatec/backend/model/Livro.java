@@ -27,7 +27,9 @@ public class Livro {
     private LocalDateTime dataDeCriacao;
     private LocalDateTime dataDeAtualizacao;
     private String autor;
+    @Enumerated(EnumType.STRING)
     private Status status;
+    @Enumerated(EnumType.STRING)
     private Avaliacao avaliacao;
 
     @ManyToOne
