@@ -1,5 +1,6 @@
 package com.fatec.backend.controller;
 
+import com.fatec.backend.form.EmailForm;
 import com.fatec.backend.form.LivroForm;
 import com.fatec.backend.model.Livro;
 import com.fatec.backend.repository.LivroRepository;
@@ -45,6 +46,12 @@ public class LivroController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/usuario")
+    public List<Livro> getLivrosPorEmail(@RequestBody EmailForm emailForm){
+        List<Livro> livros = livroRepository.findByUsuarioEmail(emailForm.getEmail());
+        return livros;
     }
 
     @PutMapping("/{id}")
